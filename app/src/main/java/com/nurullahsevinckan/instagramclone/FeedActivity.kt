@@ -1,21 +1,21 @@
 package com.nurullahsevinckan.instagramclone
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.nurullahsevinckan.instagramclone.databinding.ActivityMainBinding
+import com.nurullahsevinckan.instagramclone.databinding.ActivityFeedBinding
+import com.nurullahsevinckan.instagramclone.databinding.ActivityPostBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class FeedActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityFeedBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        var view = binding.root
+        binding = ActivityFeedBinding.inflate(layoutInflater)
+        val view = binding.root
         setContentView(view)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
