@@ -5,6 +5,41 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PostActivity">
+    tools:context=".PostActivity"
+    tools:layout_editor_absoluteX="-50dp"
+    tools:layout_editor_absoluteY="-2dp">
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="232dp"
+        android:layout_height="233dp"
+        android:layout_marginTop="116dp"
+        android:onClick="selectImageClick"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/images" />
+
+    <EditText
+        android:id="@+id/postDesctiptionText"
+        android:layout_width="307dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="60dp"
+        android:ems="10"
+        android:hint="Enter Post Description"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+
+    <Button
+        android:id="@+id/PublishButton"
+        android:layout_width="142dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="48dp"
+        android:onClick="publishButtonClick"
+        android:text="Publish"
+        app:layout_constraintStart_toStartOf="@+id/postDesctiptionText"
+        app:layout_constraintTop_toBottomOf="@+id/postDesctiptionText" />
 </androidx.constraintlayout.widget.ConstraintLayout>
