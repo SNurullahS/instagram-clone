@@ -8,7 +8,7 @@
     tools:context=".FeedActivity">
 
     <EditText
-        android:id="@+id/postaText"
+        android:id="@+id/mailText"
         android:layout_width="285dp"
         android:layout_height="58dp"
         android:layout_marginTop="32dp"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postaText" />
+        app:layout_constraintTop_toBottomOf="@+id/mailText" />
 
     <ImageView
         android:id="@+id/imageView2"
