@@ -42,7 +42,8 @@
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/account" />
+        app:srcCompat="@drawable/account"
+        tools:srcCompat="@drawable/account" />
 
     <Button
         android:id="@+id/signInButton"
