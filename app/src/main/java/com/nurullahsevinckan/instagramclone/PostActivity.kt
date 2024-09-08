@@ -41,16 +41,16 @@ class PostActivity : AppCompatActivity() {
         registerLauncher()
     }
     fun selectImageClick(view: View){
-    if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+    if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED)
     {
-        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_EXTERNAL_STORAGE)){
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_MEDIA_IMAGES)){
             Snackbar.make(view,"Permission Needed For Gallery",Snackbar.LENGTH_INDEFINITE).setAction("Give Permission"){
                 //request permission
-                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
             }.show()
         }else{
             // request permission
-            permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+            permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
         }
 
     }else{
