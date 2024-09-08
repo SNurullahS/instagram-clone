@@ -11,10 +11,11 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="232dp"
-        android:layout_height="233dp"
-        android:layout_marginTop="116dp"
+        android:layout_width="227dp"
+        android:layout_height="204dp"
+        android:layout_marginTop="96dp"
         android:onClick="selectImageClick"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

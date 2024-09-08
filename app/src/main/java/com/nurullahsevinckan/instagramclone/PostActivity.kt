@@ -72,7 +72,7 @@ class PostActivity : AppCompatActivity() {
                     selectedPicture = activityResultUri.data
                     selectedPicture?.let { selectedPicture->
                         //We wont convert this image data to bitmap cause Firebase can store image Uri format
-                        binding.imageButton.setImageURI(selectedPicture)
+                        binding.imageButton.setImageURI(selectedPicture.normalizeScheme())
                     }
                 }
             }
