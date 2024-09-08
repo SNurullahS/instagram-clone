@@ -18,14 +18,28 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import com.nurullahsevinckan.instagramclone.databinding.ActivityMainBinding
 import com.nurullahsevinckan.instagramclone.databinding.ActivityPostBinding
+import java.util.UUID
 
 class PostActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPostBinding
     private lateinit var activityResultLauncger : ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
     private var selectedPicture : Uri? = null
+
+    //For firebase futures
+    private lateinit var userAuth : FirebaseAuth
+    private lateinit var fireStore : FirebaseFirestore
+    private lateinit var storage : FirebaseStorage
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +53,34 @@ class PostActivity : AppCompatActivity() {
             insets
         }
         registerLauncher()
+
+        //Implementation Of Firebase Components
+        userAuth = Firebase.auth
+        fireStore = Firebase.firestore
+        storage = Firebase.storage
     }
+    fun publishButtonClick(view: View){
+        //Give every image unique name
+        //We use uuid, if we don t use this, every time we save image with same name
+        //Its cause override same name pictures
+        val uuid = UUID.randomUUID()
+        val randomImageName = "$uuid.jpg"
+
+        val reference = storage.reference // Give use the storage main space
+        val imageReferance = reference.child("images").child(randomImageName)
+
+        selectedPicture?.let { selectedPicture ->
+            imageReferance.putFile(selectedPicture).addOnSuccessListener { uploadTask ->
+                //download url to firestore
+            }.addOnFailureListener{exception ->
+                //error message
+                Toast.makeText(this,exception.localizedMessage,Toast.LENGTH_LONG).show()
+            }
+        }
+
+
+    }
+
     fun selectImageClick(view: View){
     if (ContextCompat.checkSelfPermission(this,Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED)
     {
@@ -60,9 +101,6 @@ class PostActivity : AppCompatActivity() {
         activityResultLauncger.launch(intentToGallery)
 
     }
-    }
-    fun publishButtonClick(view: View){
-
     }
     private fun registerLauncher(){
         activityResultLauncger = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
