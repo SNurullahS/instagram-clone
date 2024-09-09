@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.nurullahsevinckan.instagramclone.R
@@ -54,12 +55,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getData(){
-        db.collection("Posts").addSnapshotListener { value, error ->
+        // orderBy("date",Query.Direction.DESCENDING) -> shorted post by posted date (new to old)
+        db.collection("Posts").orderBy("date",Query.Direction.DESCENDING).addSnapshotListener { value, error ->
             if(error != null){
                 Toast.makeText(this,error.localizedMessage,Toast.LENGTH_LONG).show()
             }else{
                 if(value != null && !value.isEmpty){
                     val documents = value.documents
+
+                    postArrayList.clear() // Avoid duplication of posts
 
                     for(document in documents){
 

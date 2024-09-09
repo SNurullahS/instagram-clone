@@ -6,6 +6,7 @@ import androidx.core.graphics.green
 import androidx.recyclerview.widget.RecyclerView
 import com.nurullahsevinckan.instagramclone.databinding.RecyclerRowBinding
 import com.nurullahsevinckan.instagramclone.model.Post
+import com.squareup.picasso.Picasso
 
 class MainRecyclerAdapter(var postList : List<Post>) : RecyclerView.Adapter<PostHolder>() {
 
@@ -21,5 +22,6 @@ class MainRecyclerAdapter(var postList : List<Post>) : RecyclerView.Adapter<Post
     override fun onBindViewHolder(holder: PostHolder, position: Int) {
         holder.binding.recyclerEmailText.text = postList.get(position).userMail
         holder.binding.recyclerContentText.text = postList.get(position).postDescription
+        Picasso.get().load(postList.get(position).imageUrl).into(holder.binding.recyclerImageView)
     }
 }
