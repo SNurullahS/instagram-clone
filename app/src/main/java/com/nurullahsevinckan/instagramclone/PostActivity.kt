@@ -18,7 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.TotpSecret
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -27,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.nurullahsevinckan.instagramclone.databinding.ActivityMainBinding
 import com.nurullahsevinckan.instagramclone.databinding.ActivityPostBinding
+import java.util.TimeZone
 import java.util.UUID
 
 class PostActivity : AppCompatActivity() {
@@ -72,6 +75,29 @@ class PostActivity : AppCompatActivity() {
         selectedPicture?.let { selectedPicture ->
             imageReferance.putFile(selectedPicture).addOnSuccessListener { uploadTask ->
                 //download url to firestore
+                var uploadedImageReferance = storage.reference.child("images").child(randomImageName) //get the url of the image we uploaded before
+                uploadedImageReferance.downloadUrl.addOnSuccessListener { urlOfImage ->
+                    val downloadedUrl = urlOfImage.toString() // We downloaded url, now we store it in post information
+                    //First check, is user authenticate or not
+                    if(userAuth.currentUser != null){
+                        val postInformationMap = hashMapOf<String,Any>()
+                        postInformationMap.put("downloadedUrl",downloadedUrl)
+                        postInformationMap.put("userEmail",userAuth.currentUser!!.email.toString())
+                        postInformationMap.put("comment",binding. postDesctiptionText.text.toString())
+                        postInformationMap.put("date",Timestamp.now())
+
+                        fireStore.collection("Posts").add(postInformationMap).addOnSuccessListener {
+                            //Uploading post information success
+                            finish()
+
+                        }.addOnFailureListener { exception->
+                            //Uploading post information failure
+                        Toast.makeText(this,exception.localizedMessage,Toast.LENGTH_LONG).show()
+                        }
+                    }
+
+                }
+
             }.addOnFailureListener{exception ->
                 //error message
                 Toast.makeText(this,exception.localizedMessage,Toast.LENGTH_LONG).show()
