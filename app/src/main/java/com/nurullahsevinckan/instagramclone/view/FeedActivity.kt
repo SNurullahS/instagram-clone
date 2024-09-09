@@ -1,4 +1,4 @@
-package com.nurullahsevinckan.instagramclone
+package com.nurullahsevinckan.instagramclone.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,9 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.nurullahsevinckan.instagramclone.R
 import com.nurullahsevinckan.instagramclone.databinding.ActivityFeedBinding
-import com.nurullahsevinckan.instagramclone.databinding.ActivityPostBinding
-import org.checkerframework.common.returnsreceiver.qual.This
 
 class FeedActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFeedBinding
@@ -41,7 +40,7 @@ class FeedActivity : AppCompatActivity() {
         //If current user is exist, directly go to main menu of app
         val currentUser =auth.currentUser
         if (currentUser != null){
-            val intent = Intent(this@FeedActivity,MainActivity::class.java)
+            val intent = Intent(this@FeedActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -57,7 +56,7 @@ class FeedActivity : AppCompatActivity() {
         }else{
             auth.signInWithEmailAndPassword(userMail, userPassword).addOnSuccessListener{task ->
                 //success
-                val intent = Intent(this@FeedActivity,MainActivity::class.java)
+                val intent = Intent(this@FeedActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }.addOnFailureListener{task ->
@@ -76,7 +75,7 @@ class FeedActivity : AppCompatActivity() {
         }else{
             auth.createUserWithEmailAndPassword(userMail, userPassword).addOnSuccessListener{task ->
                 //success
-                val intent = Intent(this@FeedActivity,MainActivity::class.java)
+                val intent = Intent(this@FeedActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
             }.addOnFailureListener{task ->

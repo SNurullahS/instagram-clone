@@ -1,4 +1,4 @@
-package com.nurullahsevinckan.instagramclone
+package com.nurullahsevinckan.instagramclone.view
 
 import android.Manifest
 import android.content.Intent
@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Images.Media
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,16 +19,14 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.TotpSecret
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
-import com.nurullahsevinckan.instagramclone.databinding.ActivityMainBinding
+import com.nurullahsevinckan.instagramclone.R
 import com.nurullahsevinckan.instagramclone.databinding.ActivityPostBinding
-import java.util.TimeZone
 import java.util.UUID
 
 class PostActivity : AppCompatActivity() {

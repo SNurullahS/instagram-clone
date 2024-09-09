@@ -1,8 +1,7 @@
-package com.nurullahsevinckan.instagramclone
+package com.nurullahsevinckan.instagramclone.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -10,11 +9,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.nurullahsevinckan.instagramclone.R
+import com.nurullahsevinckan.instagramclone.adapter.MainRecyclerAdapter
 import com.nurullahsevinckan.instagramclone.databinding.ActivityMainBinding
 import com.nurullahsevinckan.instagramclone.model.Post
 
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var userAuth :FirebaseAuth
     private lateinit var db :FirebaseFirestore
     private lateinit var postArrayList : ArrayList<Post>
+    private lateinit var mainAdapter: MainRecyclerAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +45,11 @@ class MainActivity : AppCompatActivity() {
         db = Firebase.firestore
         postArrayList = ArrayList<Post>()
         getData()
+
+        //Connect recycler_row with our xml ui
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        mainAdapter = MainRecyclerAdapter(postArrayList)
+        binding.recyclerView.adapter = mainAdapter
 
     }
 
@@ -62,6 +71,8 @@ class MainActivity : AppCompatActivity() {
                         val post = Post(userMail,postDescription,imageUrl)
                         postArrayList.add(post)
                     }
+
+                    mainAdapter.notifyDataSetChanged() // When something chane it ll notify dataset
                 }
             }
         }
@@ -77,13 +88,13 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.add_post){
             //Add post
-            var intent = Intent(this@MainActivity,PostActivity::class.java)
+            var intent = Intent(this@MainActivity, PostActivity::class.java)
             startActivity(intent)
 
         }else if(item.itemId == R.id.logout){
             // logout
             userAuth.signOut()
-            val intent = Intent(this@MainActivity,FeedActivity::class.java)
+            val intent = Intent(this@MainActivity, FeedActivity::class.java)
             startActivity(intent)
             finish()
         }
