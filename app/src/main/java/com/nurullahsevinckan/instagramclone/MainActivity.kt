@@ -5,18 +5,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.nurullahsevinckan.instagramclone.databinding.ActivityMainBinding
+import com.nurullahsevinckan.instagramclone.model.Post
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var userAuth :FirebaseAuth
+    private lateinit var db :FirebaseFirestore
+    private lateinit var postArrayList : ArrayList<Post>
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,6 +38,33 @@ class MainActivity : AppCompatActivity() {
         }
 
         userAuth = Firebase.auth
+        db = Firebase.firestore
+        postArrayList = ArrayList<Post>()
+        getData()
+
+    }
+
+    private fun getData(){
+        db.collection("Posts").addSnapshotListener { value, error ->
+            if(error != null){
+                Toast.makeText(this,error.localizedMessage,Toast.LENGTH_LONG).show()
+            }else{
+                if(value != null && !value.isEmpty){
+                    val documents = value.documents
+
+                    for(document in documents){
+
+                        //casting
+                        val userMail = document.get("userEmail") as String
+                        val postDescription = document.get("comment") as String
+                        val imageUrl = document.get("downloadedUrl") as String
+
+                        val post = Post(userMail,postDescription,imageUrl)
+                        postArrayList.add(post)
+                    }
+                }
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
